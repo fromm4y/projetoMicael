@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Mistério das Profundezas explora segredos ocultos do oceano: criaturas, lendas e fenômenos do fundo do mar. Mergulhe em descobertas subaquáticas." />
+  <title>Mistério das Profundezas — Ordem das Marés Secretas</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.8.0/dist/tf.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+</head>
+<body>
+  <div class="wrap">
+    <header class="site-header" role="banner">
+      <div class="brand" aria-hidden="false">
+        <div class="logo" aria-hidden="true">MdP</div>
+        <div>
+          <div style="font-weight:800">Ordem das Marés Secretas</div>
+          <div style="font-size:13px;color:var(--muted)">Projeto: Fundo do Mar — Integrantes: Davi Fernandes Kubota, Enzo Zamboni Souza</div>
+        </div>
+      </div>
+
+      <nav class="main-nav" role="navigation" aria-label="Navegação principal">
+        <a href="#curiosidades">Curiosidades</a>
+        <a href="#fatos">Fatos</a>
+        <a href="#galeria">Galeria</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+
+      <div class="controls" role="group" aria-label="Controles do site">
+        <button id="modeToggle" class="toggle" aria-pressed="false" title="Alternar modo claro/escuro">Modo</button>
+      </div>
+    </header>
+
+    <main role="main" aria-labelledby="pageTitle">
+      <!-- HERO -->
+      <section class="hero" aria-label="Introdução">
+        <div class="intro" id="introBlock">
+          <h1 id="pageTitle">Mistério das Profundezas</h1>
+          <div style="font-weight:700; color:var(--accent); margin-bottom:8px">Mergulhe no segredo que o mar esconde</div>
+          <p class="lead">O projeto Mistério das Profundezas explora os segredos ocultos do oceano, revelando criaturas, lendas e fenômenos misteriosos que habitam o fundo do mar. O site convida o visitante a mergulhar em descobertas, curiosidades e aventuras subaquáticas.</p>
+
+          <div class="cta" role="group" aria-label="Ações principais">
+            <button id="abrirIA" class="btn" aria-label="Iniciar reconhecimento facial">Reconhecimento Facial</button>
+            <button id="btnAbrirChatbot" class="btn secondary" aria-label="Abrir chatbot">Abrir Chatbot</button>
+          </div>
+        </div>
+
+        <div class="media" id="heroMedia" aria-hidden="false">
+          <!-- TODO: substituir imagem do hero se desejar -->
+          <img src="https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2025/06/Mariana-trench.jpg?w=1200&h=675&crop=1"
+               alt="Visão artística do fundo do mar mostrando criaturas misteriosas e luzes bioluminescentes"
+               width="100%" height="auto" />
+          <div style="padding:10px; font-size:13px; color:var(--muted)">Imagem: Cena subaquática — Créditos incluídos na seção de fontes.</div>
+        </div>
+      </section>
+
+      <!-- CURIOSIDADES -->
+      <section id="curiosidades" aria-labelledby="curiosTitle">
+        <h2 id="curiosTitle">Curiosidades</h2>
+        <div class="curiosidades" role="list">
+          <article class="curio" role="listitem">
+            <div class="icon-bubble" aria-hidden="true">1</div>
+            <div><p>Menos de 5% dos oceanos da Terra já foram explorados pelo ser humano.</p></div>
+          </article>
+
+          <article class="curio" role="listitem">
+            <div class="icon-bubble" aria-hidden="true">2</div>
+            <div><p>A pressão nas profundezas é tão alta que esmagaria um carro como se fosse uma lata.</p></div>
+          </article>
+
+          <article class="curio" role="listitem">
+            <div class="icon-bubble" aria-hidden="true">3</div>
+            <div><p>Existem criaturas que produzem sua própria luz: bioluminescência.</p></div>
+          </article>
+
+          <article class="curio" role="listitem">
+            <div class="icon-bubble" aria-hidden="true">4</div>
+            <div><p>No fundo do mar há rios e lagos submersos formados por diferenças de salinidade.</p></div>
+          </article>
+
+          <article class="curio" role="listitem">
+            <div class="icon-bubble" aria-hidden="true">5</div>
+            <div><p>A Fossa das Marianas alcança cerca de 11.000 metros — o ponto mais profundo conhecido.</p></div>
+          </article>
+        </div>
+      </section>
+
+      <!-- FATOS / CIÊNCIA -->
+      <section id="fatos" aria-labelledby="fatosTitle">
+        <h2 id="fatosTitle">Fatos e Ciência</h2>
+        <div class="fatos-grid" role="list">
+          <article class="fato" role="listitem">
+            <h3>Zonas Abissais</h3>
+            <p>Acima de 4.000 metros a luz não chega — é um ambiente de escuridão total, frio extremo e espécies bioluminescentes.</p>
+          </article>
+
+          <article class="fato" role="listitem">
+            <h3>Pressão Extrema</h3>
+            <p>Nas maiores profundidades a pressão pode ultrapassar mil vezes a da superfície, exigindo adaptações únicas dos seres que lá vivem.</p>
+          </article>
+
+          <article class="fato" role="listitem">
+            <h3>Montanhas Submarinas</h3>
+            <p>Cadeias e vulcões submarinos formam a maior estrutura geológica contínua da Terra — a Dorsal Mesoatlântica é um exemplo.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- GALERIA -->
+      <section id="galeria" aria-labelledby="galeriaTitle">
+        <h2 id="galeriaTitle">Galeria</h2>
+        <div class="gallery" role="list">
+          <figure role="listitem">
+            <img src="https://i.ytimg.com/vi/LjUKjtN-QvE/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLAY7ckHV17VjHn3PXsXTUKUYeKqfw"
+                 alt="Imagem subaquática mostrando criaturas e formações rochosas" />
+            <figcaption>Formações rochosas e fauna abissal.</figcaption>
+          </figure>
+
+          <figure role="listitem">
+            <img src="https://conteudo.imguol.com.br//c/especiais/ecoa/_2023/oceano/v10/6-mob.jpg"
+                 alt="Cardume e profundidade do oceano" />
+            <figcaption>Cardume nas camadas superiores do mar.</figcaption>
+          </figure>
+
+          <figure role="listitem">
+            <img src="https://multiversonoticias.com.br/wp-content/uploads/2023/07/pplware-fossa-marianas.jpg"
+                 alt="Fotografia da Fossa das Marianas" />
+            <figcaption>Fossa das Marianas — o ponto mais profundo.</figcaption>
+          </figure>
+
+          <figure role="listitem">
+            <img src="https://hypescience.com/wp-content/uploads/2016/02/barulho-oceano-profundo.jpg"
+                 alt="Ondas sonoras e espectro de som subaquático" />
+            <figcaption>Sons misteriosos captados no oceano.</figcaption>
+          </figure>
+
+          <figure role="listitem">
+            <img src="https://www.123superplay.com/wp-content/uploads/2025/01/DALL%C2%B7E-2025-01-28-10.38.24-Uma-cena-realista-de-um-jogo-de-exploracao-subaquatica-chamado-Murky-Divers.-Mostre-um-mergulhador-com-equipamento-avancado-explorando-as-profundezas--1024x585.webp"
+                 alt="Cena artística de mergulhador explorando profundezas" />
+            <figcaption>Mergulhador em exploração fictícia.</figcaption>
+          </figure>
+
+          <figure role="listitem">
+            <img src="https://services.meteored.com/img/article/novo-tipo-de-virus-e-descoberto-na-fossa-das-marianas-o-lugar-mais-profundo-dos-oceanos-1695492315432_512.jpg"
+                 alt="Imagem ilustrativa de descoberta científica na Fossa" />
+            <figcaption>Descobertas científicas em profundezas extremas.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faq" aria-labelledby="faqTitle">
+        <h2 id="faqTitle">Perguntas Frequentes</h2>
+
+        <details>
+          <summary>O que torna as profundezas do mar tão misteriosas?</summary>
+          <p>A falta de luz, a pressão extrema e a dificuldade de acesso tornam as regiões profundas pouco conhecidas.</p>
+        </details>
+
+        <details>
+          <summary>Já exploramos todo o fundo do oceano?</summary>
+          <p>Não — mais de 80% permanece desconhecido para a ciência humana.</p>
+        </details>
+
+        <details>
+          <summary>Existem criaturas bioluminescentes no fundo do mar?</summary>
+          <p>Sim — várias espécies produzem luz para atrair presas, se comunicar ou se camuflar.</p>
+        </details>
+
+        <details>
+          <summary>O que são fontes hidrotermais?</summary>
+          <p>Aberturas no fundo marinho que liberam água superaquecida rica em minerais, base de ecossistemas únicos.</p>
+        </details>
+
+        <details>
+          <summary>Podemos ver o fundo do mar com satélites?</summary>
+          <p>Não diretamente; satélites dão informações gerais, mas mapas detalhados dependem de sonares e submersíveis.</p>
+        </details>
+      </section>
+
+      <!-- CALL TO ACTION -->
+      <section aria-label="Call to action">
+        <h2>Aprenda mais</h2>
+        <p class="small">Deseja material adicional? <a href="#galeria" style="color:var(--accent); text-decoration:underline">Visite a galeria</a> ou baixe nosso kit (em breve).</p>
+        <!-- TODO: adicionar link de download quando o material estiver pronto -->
+      </section>
+
+      <!-- CRÉDITOS / FONTES -->
+      <section aria-label="Créditos e fontes">
+        <h2>Créditos / Fontes</h2>
+        <p class="credits">Imagens e referências usadas neste projeto (exemplos fornecidos pela equipe): YouTube thumbnails, Imagens de domínio público e bancos de imagens (Unsplash / Pixabay / Pexels / Freepik), matérias científicas sobre oceanografia e relatórios de organizações como NOAA e National Geographic.</p>
+        <ul>
+          <li><a href="https://www.noaa.gov" target="_blank" rel="noopener">NOAA — Administração Nacional Oceânica e Atmosférica</a></li>
+          <li><a href="https://www.nationalgeographic.com" target="_blank" rel="noopener">National Geographic — Oceanos</a></li>
+          <!-- TODO: substituir/acompanhar com links específicos usados -->
+        </ul>
+      </section>
+
+<!-- MODAL DE RECONHECIMENTO FACIAL -->
+<div id="cameraModal" class="camera-modal" aria-hidden="true">
+  <div class="camera-modal-content">
+  
+    <button id="fecharModal" class="camera-close" title="Fechar">❌</button>
+    <h2 class="camera-title">Reconhecimento Facial</h2>
+    <div class="camera-video-box">
+      <video id="video" autoplay muted playsinline></video>
+    </div>
+    <div class="camera-controls">
+      <button id="tirarFoto" class="camera-btn">📸 Tirar Foto</button>
+    </div>
+    <p id="modalStatus" class="camera-status">Aguardando...</p>
+    <canvas id="fotoCanvas" style="display:none;"></canvas>
+  </div>
+</div>
+
+      <footer role="contentinfo">
+        <div>© <span id="anoAtual">2025</span> Ordem das Marés Secretas</div>
+        <div class="credits">Integrantes: Davi Fernandes Kubota, Enzo Zamboni Souza — <a href="#top" class="top-link">Voltar ao topo</a></div>
+      </footer>
+    </main>
+
+      <!-- Chatbot Aside (inicialmente oculto) -->
+    <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+
+    <df-messenger
+      intent="WELCOME"
+      chat-title="Chatbot-IA"
+      agent-id="7e9ea28d-fc2a-4f18-a435-1d31267d9a34"
+      language-code="pt-br">
+    </df-messenger> 
+
+  </div>
+<script defer src="script.js"></script>
+</body>
+</html>
