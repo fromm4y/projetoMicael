@@ -1,68 +1,78 @@
+import * as tf from "@tensorflow/tfjs-node";
+import * as faceapi from "@vladmandic/face-api";
 import express from "express";
 import multer from "multer";
 import cors from "cors";
 import path from "path";
+import { fileURLToPath } from "url";
 import fs from "fs";
-
-// Importa TensorFlow.js puro (JS), sem binários nativos
-import "@tensorflow/tfjs";
-import * as faceapi from "@vladmandic/face-api";
-
-// Importa o canvas e integra com face-api
 import canvas from "canvas";
 
-// Configurações do canvas para face-api
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// 🧠 O tfjs-node já é detectado automaticamente — não precisa forçar faceapi.tf
+globalThis.tf = tf;
+
+// 🧩 Configura o ambiente do Node com o canvas
 const { Canvas, Image, ImageData } = canvas;
 faceapi.env.monkeyPatch({ Canvas, Image, ImageData });
 
-// Inicializa o Express
+
 const app = express();
 app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, "public")));
+app.use("/models", express.static(path.join(__dirname, "models")));
 
-// Configuração do multer para upload de imagens
-const storage = multer.memoryStorage();
-const upload = multer({ storage });
+// 📸 Configura upload
+const upload = multer({ dest: path.join(__dirname, "uploads/") });
 
-// Caminho para os modelos do face-api
-const MODELS_PATH = path.join(process.cwd(), "models");
+async function carregarModelos() {
+  const MODEL_PATH = path.join(__dirname, "models");
+  console.log("📦 Carregando modelos de:", MODEL_PATH);
 
-// Função para carregar os modelos
-async function loadModels() {
-  try {
-    await faceapi.nets.ssdMobilenetv1.loadFromDisk(MODELS_PATH);
-    await faceapi.nets.faceLandmark68Net.loadFromDisk(MODELS_PATH);
-    await faceapi.nets.faceRecognitionNet.loadFromDisk(MODELS_PATH);
-    console.log("Modelos carregados com sucesso!");
-  } catch (err) {
-    console.error("Erro ao carregar os modelos:", err);
-  }
+  await faceapi.nets.tinyFaceDetector.loadFromDisk(MODEL_PATH);
+  await faceapi.nets.faceLandmark68Net.loadFromDisk(MODEL_PATH);
+  await faceapi.nets.faceRecognitionNet.loadFromDisk(MODEL_PATH);
+  await faceapi.nets.faceExpressionNet.loadFromDisk(MODEL_PATH);
+
+  console.log("✅ Modelos carregados com sucesso!");
 }
+await carregarModelos();
 
-// Endpoint de teste para upload e detecção facial
-app.post("/detect", upload.single("image"), async (req, res) => {
-  if (!req.file) return res.status(400).send("Nenhuma imagem enviada.");
-
+// 🧠 Endpoint para processar imagem e detectar emoção
+app.post("/processar-foto", upload.single("foto"), async (req, res) => {
   try {
-    // Cria imagem a partir do buffer
-    const img = await canvas.loadImage(req.file.buffer);
+    const img = await canvas.loadImage(req.file.path);
 
-    // Detecta rostos
     const detections = await faceapi
-      .detectAllFaces(img)
-      .withFaceLandmarks()
-      .withFaceDescriptors();
+      .detectAllFaces(img, new faceapi.TinyFaceDetectorOptions())
+      .withFaceExpressions();
 
-    res.json(detections);
+    fs.unlinkSync(req.file.path); // remove a foto depois de processar
+
+    if (detections.length === 0) {
+      return res.json({ facesEncontradas: 0 });
+    }
+
+    const expressao = detections[0].expressions;
+    const emocao = Object.keys(expressao).reduce((a, b) =>
+      expressao[a] > expressao[b] ? a : b
+    );
+    const confianca = Math.round(expressao[emocao] * 100);
+
+    res.json({
+      facesEncontradas: detections.length,
+      emocao,
+      confianca,
+    });
   } catch (err) {
-    console.error("Erro ao detectar rostos:", err);
-    res.status(500).send("Erro na detecção facial.");
+    console.error("❌ Erro no processamento:", err);
+    res.status(500).json({ erro: "Erro ao processar imagem" });
   }
 });
 
-// Inicializa o servidor
-const PORT = process.env.PORT || 3000;
-loadModels().then(() => {
-  app.listen(PORT, () => console.log(`Servidor rodando em http://localhost:${PORT}`));
-});
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () =>
+  console.log(`🚀 Servidor rodando em: http://localhost:${PORT}`)
+);
